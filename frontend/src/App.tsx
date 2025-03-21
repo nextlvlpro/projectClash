@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{message}</h1>
+     <LandingPage/>
     </div>
   );
 }
