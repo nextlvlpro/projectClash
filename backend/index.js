@@ -1,24 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("./db/db,js");
-require("dotenv").config();  // To use environment variables
+const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
-const port = process.env.PORT || 5000;  // Set port from environment variable or default to 5000
+const port = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());  // Allow cross-origin requests
-app.use(express.json());  // Parse incoming JSON requests
+app.use(cors());
+app.use(express.json());
 
-// DB Connection
-connectDB();
+// Routes will go here
 
-// Example route
-app.get("/test", (req, res) => {
-  res.send("Welcome to Project Clash API!");
-});
+// Error handling middleware (should be last)
+app.use(errorHandler);
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
