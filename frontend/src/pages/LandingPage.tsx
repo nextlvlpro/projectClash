@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 
-const troops = ["Barbarian", "Archer", "Giant"];
+const troops:string[] = ["Barbarian", "Archer", "Giant"];
 
-const LandingPage: React.FC = () => {
+const LandingPage= () => {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
       {/* Hero Section */}
