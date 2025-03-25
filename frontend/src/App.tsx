@@ -1,11 +1,18 @@
-import LandingPage from "./pages/LandingPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LandingPage from "./components/pages/home/LandingPage";
+import { AuthProvider } from "./context/AuthContext";
+import Players from "./components/pages/players/Players";
 
 function App() {
-
   return (
-    <div className="App">
-      <LandingPage />
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<LandingPage />} />
+          <Route path="/players" element={<Players/>} /> 
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
