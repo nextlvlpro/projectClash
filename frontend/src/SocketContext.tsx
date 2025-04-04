@@ -24,7 +24,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     setSocket(newSocket);
   
     newSocket.on("connect", () => {
-      console.log("✅ Connected to WebSocket:", newSocket);
+      console.log("✅ Connected to WebSocket:", newSocket.id);
     });
   
     newSocket.on("connect_error", (err) => {

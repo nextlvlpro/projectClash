@@ -18,7 +18,7 @@ function initializeSocket(server) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       
-      socket.userEmail = decoded.id; // Attach email to socket
+      socket.id = decoded.id; // Attach email to socket
       
       
       next();
@@ -30,13 +30,13 @@ function initializeSocket(server) {
   });
 
   io.on("connection", (socket) => {
-    console.log(`⚡ User connected: ${socket.userEmail}`);
+    console.log(`⚡ User connected: ${socket.id}`);
     
     // Store user with email as ID
     socket.join(socket.userEmail);
 
     socket.on("disconnect", () => {
-      console.log(`❌ User disconnected: ${socket.userEmail}`);
+      console.log(`❌ User disconnected: ${socket.id}`);
     });
   });
 
