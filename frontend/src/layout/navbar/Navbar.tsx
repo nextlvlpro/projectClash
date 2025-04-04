@@ -13,7 +13,7 @@ export default function Navbar() {
     { label: "Home", path: "/" },
     { label: "Players", path: "/players" },
     { label: "Clans", path: "/clans" },
-    { label: "Tournaments", path: "/tournaments" },
+    { label: "Global Chat", path: "/global-chat" },
   ];
 
   return (
@@ -85,7 +85,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="mt-4 text-gray-400 border-t border-gray-600 pt-4">
-                User Info
+                <UserInfo />
               </div>
             </div>
           </motion.div>

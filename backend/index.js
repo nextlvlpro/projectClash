@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 //cookie parser
 app.use(cookieParser());
+app.use(express.json());
 
 
 //cors 

@@ -12,7 +12,6 @@ cocApiRouter.get("/test", async (req, res) => {
 
 
 async function testApi () {
-    console.log(royleApiToken);
     
     const response = await axios.get("https://cocproxy.royaleapi.dev/v1/locations/32000113/rankings/players",
         {
