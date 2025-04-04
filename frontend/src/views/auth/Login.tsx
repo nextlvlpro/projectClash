@@ -51,7 +51,20 @@ export default function Login() {
   }
 
   if (user) { 
-    return navigate(-1)
+    setTimeout(() => {
+      navigate(-1)
+    }, 1000)
+
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }} 
+        animate={{ opacity: 1, scale: 1 }} 
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md bg-gray-900 p-6 rounded-lg shadow-lg mx-auto h-[60vh]"
+      >
+        <h2 className="text-2xl font-bold text-center text-primary">You are already logged in</h2>
+      </motion.div>
+    )
   }
 
 

@@ -8,6 +8,8 @@ import Register from "./views/auth/Register"
 import ThemeInitializer from "./theme/ThemeInitializer"
 import { ToastContainer } from "react-toastify"
 import Login from "./views/auth/Login"
+import GlobalChat from "./features/globalChat/GlobalChat"
+
 function App() {
 axios.defaults.baseURL = baseAddress
 axios.defaults.withCredentials = true
@@ -18,9 +20,16 @@ axios.defaults.withCredentials = true
       <HomeLayout >
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="players" element={<Players />} />
+         
+
+          //auth
           <Route path="/auth/register" element={<Register/>} />
           <Route path="/auth/login" element={<Login/>} />
+
+          //coc related routes
+          <Route path="players" element={<Players />} />
+
+          <Route path="/global-chat" element={<GlobalChat/>} />
         </Routes>
       </HomeLayout>
       <ToastContainer/>

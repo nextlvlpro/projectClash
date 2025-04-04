@@ -1,49 +1,50 @@
-// required Packages
-const express = require('express');
+// Required Packages
+const express = require("express");
+const http = require("http"); // Import HTTP
+const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const connectDb = require("./db/db");
+
+// Required routes
+const mainRouter = require("./routes/mainRouter");
+const errorHandler = require("./utils/errorHandler");
+const { initializeSocket } = require("./socket/socket");
+
 const app = express();
-const mongoose = require('mongoose');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const connectDb = require('./db/db');
+const server = http.createServer(app); // Create an HTTP server
 
-
-//required routes
-const mainRouter = require('./routes/mainRouter');
-const errorHandler = require('./utils/errorHandler');
-
-
-//server addrress
+// Server address
 const PORT = process.env.PORT || 5000;
 
-//cookie parser
+// Middleware
 app.use(cookieParser());
 app.use(express.json());
-
-
-//cors 
-app.use (cors({
+app.use(
+  cors({
     credentials: true,
-    origin: true
-}))
+    origin: true,
+  })
+);
 
-// db connection
+// DB connection
 connectDb();
 
-//routes
+// Routes
 app.use("/api", mainRouter);
 
-//test Route 
+// Test Route
 app.get("/test", (req, res) => {
-    res.json({message: `Server is fine and working on port ${PORT}`})
-})
+  res.json({ message: `Server is fine and working on port ${PORT}` });
+});
 
-
-
-// error handler
+// Error handler
 app.use(errorHandler);
 
-// server listening
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-})
+// Initialize Socket.io with the HTTP server
+initializeSocket(server);
+
+// Start the server
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
