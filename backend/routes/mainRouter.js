@@ -1,12 +1,19 @@
-const mainRouter = require('express').Router();
+const express = require('express');
+const cocApiRouter = require('./cocApiRoute/cocApiRouter');
+const authRouter = require('./auth/authRouter');
 
+const mainRouter = express.Router(); // Correct way to define the router
 
-mainRouter.post("/base", (req,res) => {
+// Test base route
+mainRouter.get("/base", (req, res) => {
     res.json({
-        message: "hello"
-    })
-})
+        message: "Hello from /api/base"
+    });
+});
 
+// Add CoC API router
+mainRouter.use("/coc", cocApiRouter);
 
-
-module.exports = mainRouter
+//auth routes
+mainRouter.use("/auth", authRouter)
+module.exports = mainRouter;

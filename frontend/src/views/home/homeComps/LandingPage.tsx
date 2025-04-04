@@ -1,3 +1,4 @@
+import Button from "../../../components/ui/Button";
 
 export default function LandingPage() {
   return (
@@ -12,19 +13,20 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="flex flex-col md:flex-row items-center gap-8 max-w-4xl">
-        <img
-          src="/clash-hero.png"
-          alt="Clash Hero"
-          className="w-80 md:w-96 rounded-lg shadow-lg"
-        />
+       <img
+            src="landingPage/clashhub.jpg"
+         />   
         <div className="text-center md:text-left">
           <h2 className="text-accent text-3xl font-bold">Lead Your Clan to Victory!</h2>
           <p className="mt-2 text-lg">
             Strategize, train troops, and conquer enemy bases to become the ultimate leader.
           </p>
-          <button className="bg-primary text-white px-6 py-3 mt-4 rounded-lg shadow-md hover:bg-opacity-80">
-            Get Started
-          </button>
+          <Button
+            variant="secondary"
+            size="lg"
+            >
+            lets go
+          </Button>
         </div>
       </section>
     </div>
