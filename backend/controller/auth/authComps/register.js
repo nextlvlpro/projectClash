@@ -29,7 +29,7 @@ async function registerNewUser(req, res, next) {
         });
 
         await newUser.save(); // Save user to MongoDB
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // **5️⃣ Send success response**
         res.cookie("authToken", token, {
