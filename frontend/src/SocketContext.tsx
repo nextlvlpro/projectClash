@@ -5,6 +5,8 @@ import { useUser } from "./UserContext";
 
 interface SocketContextType {
   socket: Socket | null;
+  messages: { user: string; text: string }[];
+  sendMessage: (text: string) => void;
 }
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
@@ -12,6 +14,7 @@ const SocketContext = createContext<SocketContextType | undefined>(undefined);
 export function SocketProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser(); // Get logged-in user
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [messages, setMessages] = useState<{ user: string; text: string }[]>([]);
 
   useEffect(() => {
     if (!user) return;
@@ -26,7 +29,12 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     newSocket.on("connect", () => {
       console.log("✅ Connected to WebSocket:", newSocket.id);
     });
-  
+    
+    newSocket.on("chatHistory", (history) => setMessages(history));
+    newSocket.on("receiveMessage", (message) => {
+        setMessages((prev) => [...prev, message]);
+      });
+
     newSocket.on("connect_error", (err) => {
       console.error("❌ Socket Connection Error:", err.message);
     });
@@ -40,10 +48,16 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       console.log("🔌 Socket Disconnected");
     };
   }, [user]);
+
+  const sendMessage = (text: string) => {
+    if (socket && user) {
+      socket.emit("sendMessage", { user: user.email, text });
+    }
+}
   
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, messages, sendMessage  }}>
       {children}
     </SocketContext.Provider>
   );

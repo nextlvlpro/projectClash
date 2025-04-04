@@ -16,6 +16,7 @@ const server = http.createServer(app); // Create an HTTP server
 
 // Server address
 const PORT = process.env.PORT || 5000;
+const LOCAL_IP = "192.168.31.53";
 
 // Middleware
 app.use(cookieParser());
@@ -45,6 +46,6 @@ app.use(errorHandler);
 initializeSocket(server);
 
 // Start the server
-server.listen(PORT, () => {
+server.listen(PORT,LOCAL_IP, () => {
   console.log(`Server is running on port ${PORT}`);
 });

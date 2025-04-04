@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
+const Message = require("../model/globalChat/messageModal");
 
 function initializeSocket(server) {
   const io = new Server(server, {
@@ -29,11 +30,31 @@ function initializeSocket(server) {
     }
   });
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     console.log(`⚡ User connected: ${socket.id}`);
-    
+
+    const messages = await Message.find().sort({ timestamp: -1 }).limit(100);
+    socket.emit("chatHistory", messages.reverse());
+
+
+
+    socket.on("sendMessage", async ({ user, text }) => {
+        const newMessage = new Message({ user, text });
+        await newMessage.save();
+        io.emit("receiveMessage", newMessage);
+
+        // Keep only the last 100 messages in DB
+        const messageCount = await Message.countDocuments();
+        if (messageCount > 100) {
+          const oldestMessage = await Message.findOne().sort({ timestamp: 1 });
+          if (oldestMessage) {
+            await Message.deleteOne({ _id: oldestMessage._id });
+          }
+        }
+      });
+
     // Store user with email as ID
-    socket.join(socket.userEmail);
+    socket.join(socket.id);
 
     socket.on("disconnect", () => {
       console.log(`❌ User disconnected: ${socket.id}`);

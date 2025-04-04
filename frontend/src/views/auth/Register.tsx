@@ -33,7 +33,7 @@ export default function Register() {
     playerApiKey: "",
   });
   const navigate = useNavigate()
-  const {user} = useUser()
+  const {user,setUser} = useUser()
   const [errors, setErrors] = useState<FormErrors>({});
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -51,7 +51,10 @@ export default function Register() {
     } else {
         try {
             const response = await axios.post("/api/auth/register", form)
-            console.log(response);
+            console.log("Registration Success")
+            toast.success("Registration successful!")
+            setUser(response.data.user)
+            navigate(-1)
                  
         } catch (error) {
             const errMsg = getErrorMessage(error)

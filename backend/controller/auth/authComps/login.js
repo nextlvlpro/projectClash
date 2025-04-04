@@ -14,7 +14,9 @@ async function loginUser (req,res,next) {
             // **2️⃣ Check if user exists**
             
             const user = await User.findOne( {email});
-            if (!!!user) {
+            console.log(email);
+            
+            if (!user) {
                 return res.status(401).json({ message: "Invalid credentials: Email" });
             }
             // **3️⃣ Compare passwords**
