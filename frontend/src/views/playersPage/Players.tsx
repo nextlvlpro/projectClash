@@ -1,20 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Input from "../../components/ui/Input";
+import axios from "axios";
+import getErrorMessage from "../../utils/getErrorMessage";
+import { toast } from "react-toastify";
 
-const mockPlayers = [
-  { id: 1, name: "King Slayer", clan: "Warriors", trophies: 3200 },
-  { id: 2, name: "Shadow Ninja", clan: "Dark Legion", trophies: 2950 },
-  { id: 3, name: "Mighty Thor", clan: "Asgardians", trophies: 3400 },
-  { id: 4, name: "Dragon Lord", clan: "Fireborn", trophies: 3100 },
-];
 
 export default function Players() {
+  const [loading,setLoading] = useState(false)
   const [search, setSearch] = useState("");
+  const [topPlayers, setTopPlayers] = useState([]);
+  const [location, setLocation] = useState<string>("global");
+  
 
-  const filteredPlayers = mockPlayers.filter((player) =>
-    player.name.toLowerCase().includes(search.toLowerCase())
-  );
+  useEffect(()=> {
+    setLoading(true)
+    setLocation("india")
+      getTopPlayers(location)
+      .then((data) => {
+        setTopPlayers(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching top players:", error);
+        const errMsg = getErrorMessage(error)
+        toast.error(errMsg);
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+      
+  },[])
+
+
+
+  
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-800 text-white">
@@ -66,25 +87,40 @@ export default function Players() {
         transition={{ duration: 0.5 }}
         className="p-6 max-w-3xl mx-auto space-y-4"
       >
-        {filteredPlayers.length > 0 ? (
-          filteredPlayers.map((player) => (
+        {!!topPlayers && topPlayers.length > 0 ? (
+          topPlayers.map((player: any,index) => (
             <motion.div
-              key={player.id}
+              key={index}
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 200 }}
               className="bg-secondary text-text p-4 rounded-lg flex justify-between items-center shadow-md"
             >
               <div>
-                <p className="text-lg font-semibold">{player.name}</p>
-                <p className="text-sm text-gray-400">Clan: {player.clan}</p>
+                <p className="text-lg font-semibold">{player?.name}</p>
+                {/* <p className="text-sm text-gray-400">Clan: {player?.clan}</p> */}
               </div>
-              <p className="text-yellow-400 font-bold">{player.trophies} 🏆</p>
+              <p className="text-yellow-400 font-bold">{player?.trophies} 🏆</p>
             </motion.div>
           ))
         ) : (
-          <p className="text-center text-gray-500">No players found.</p>
+          <p className="text-center text-gray-500">{loading ? "Getting Top Players....." : "No players found."}</p>
         )}
       </motion.div>
     </div>
   );
+}
+
+
+//helper functions
+async function getTopPlayers(location: string) {
+  try {
+    const {data} = await axios.post("/api/coc/topplayers", {location})
+    return data
+    
+  } catch (error) {
+    let errMsg = getErrorMessage(error)
+    console.log(errMsg)
+    console.error(error);
+
+  }
 }

@@ -86,6 +86,7 @@ export default function Login() {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           <Input
@@ -95,6 +96,7 @@ export default function Login() {
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 

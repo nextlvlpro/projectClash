@@ -8,6 +8,7 @@ type InputProps = {
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   variant?: "default" | "outline" | "filled";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
@@ -21,17 +22,18 @@ export default function Input({
   placeholder = "",
   value,
   onChange,
+  onKeyDown,
   variant = "default",
   size = "md",
   disabled = false,
   className = "",
 }: InputProps) {
-  const baseStyles = "w-full rounded-lg font-medium transition-all focus:outline-none";
+  const baseStyles = " rounded-lg font-medium transition-all focus:outline-none";
 
   const variantStyles = {
     default: "bg-background text-text border border-gray-600 focus:ring-2 focus:ring-primary",
     outline: "border border-text bg-transparent text-text focus:ring-2 focus:ring-primary",
-    filled: "bg-primary text-background border-none focus:ring-2 focus:ring-accent",
+    filled: "bg-secondary text-background border-none focus:ring-2 focus:ring-accent",
   };
 
   const sizeStyles = {
@@ -49,6 +51,7 @@ export default function Input({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       disabled={disabled}
       className={clsx(
         baseStyles,

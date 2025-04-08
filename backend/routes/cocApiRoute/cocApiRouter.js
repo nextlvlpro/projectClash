@@ -1,4 +1,5 @@
 const { default: axios } = require('axios');
+const { getTopPlayersData } = require('../../controller/cocApi/playersController');
 require('dotenv').config()
 const cocApiRouter = require('express').Router();
 const apiToken = process.env.COC_API_VAR;
@@ -10,7 +11,17 @@ cocApiRouter.get("/test", async (req, res) => {
     res.json(data);
 });
 
-
+cocApiRouter.post("/topplayers", async (req, res) => {
+    try {
+        const location = req.body.location;
+    const data = await getTopPlayersData(location);
+    res.json(data);    
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred while fetching data." });
+    console.error(error);
+    }
+    
+})
 async function testApi () {
     
     const response = await axios.get("https://cocproxy.royaleapi.dev/v1/locations/32000113/rankings/players",
