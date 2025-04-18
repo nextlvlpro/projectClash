@@ -44,6 +44,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         axios.post("/api/auth/login/logout", {}, { withCredentials: true }).then(() => {
             setUser(null);
             setUserVerified(false);
+            
             localStorage.removeItem("user"); // Remove from localStorage on logout
         });
     }

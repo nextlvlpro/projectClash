@@ -17,7 +17,7 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
 
 export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const backendAddress = "http://localhost:5000";
+  const backendAddress = "http://192.168.31.53:5000";
   const { user, userVerified } = useUser(); // Get logged-in user
   const [socket, setSocket] = useState<Socket | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);

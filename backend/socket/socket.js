@@ -5,7 +5,7 @@ const { handleSocketConnection } = require("./socketHandler");
 function initializeSocket(server) {
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: true,
       methods: ["GET", "POST"],
       credentials: true,
     },
@@ -21,7 +21,7 @@ function initializeSocket(server) {
   });
 
   io.engine.on("connection_error", (err) => {
-    console.error("❌ Global socket connection error:", err.message);
+    console.error("❌ Global socket connection error:", err);
   });
 
   console.log("✅ Socket.io initialized successfully!");

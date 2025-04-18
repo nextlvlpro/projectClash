@@ -31,7 +31,7 @@ async function loginUser (req,res,next) {
             // **5️⃣ Send success response with token and user data**
             res.cookie("authToken", token, {
                 httpOnly: true,
-                secure: true, // ✅ true only in production (HTTPS)
+                Secure: true, // ✅ true only in production (HTTPS)
                 sameSite: "Lax",                               // ✅ or "Strict" — see explanation below
                 maxAge: 7 * 24 * 60 * 60 * 1000,               // ✅ 7 days
             }).status(200).json({

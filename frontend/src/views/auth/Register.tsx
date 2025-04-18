@@ -90,7 +90,7 @@ export default function Register() {
     }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background text-text">
+    <div className="min-h-screen flex items-center justify-center bg-background text-text ">
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }} 
         animate={{ opacity: 1, scale: 1 }} 
@@ -107,6 +107,7 @@ export default function Register() {
             placeholder="name"
             value={form.name}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
@@ -117,6 +118,7 @@ export default function Register() {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
@@ -127,6 +129,7 @@ export default function Register() {
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 
@@ -137,6 +140,7 @@ export default function Register() {
             placeholder="Confirm Password"
             value={form.confirmPassword}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
 
@@ -147,6 +151,7 @@ export default function Register() {
             placeholder="Player API Key"
             value={form.playerApiKey}
             onChange={handleChange}
+            className="w-full"
           />
           {errors.playerApiKey && <p className="text-red-500 text-sm">{errors.playerApiKey}</p>}
 

@@ -69,5 +69,5 @@ process.on("uncaughtException", (err) => {
 
 // Start the server
 server.listen(PORT,LOCAL_IP, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${LOCAL_IP} ${PORT}`);
 });
